@@ -3,15 +3,17 @@ package com.aless00san.springboot.gunpladb.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.RestController;
-
-import com.aless00san.springboot.gunpladb.entities.Gunpla;
-import com.aless00san.springboot.gunpladb.services.IGunplaService;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.RestController;
 
+import com.aless00san.springboot.gunpladb.entities.Gunpla;
+import com.aless00san.springboot.gunpladb.services.IGunplaService;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 
 
 @RestController
@@ -31,10 +33,27 @@ public class GunplaController {
         return gunplaService.findById(id);
     }
 
-    @GetMapping
-    public List<Gunpla> getMethodName(@RequestParam String grade) {
+    @GetMapping(params = {"grade"})
+    public List<Gunpla> findByGrade(@RequestParam String grade) {
         return gunplaService.findByGrade(grade);
     }
+    
+    @GetMapping(params = {"series"})
+    public List<Gunpla> findBySeries(@RequestParam String series) {
+        return gunplaService.findBySeries(series);
+    }
+
+    @DeleteMapping("/{id}")
+    public void deleteGunplaById(@PathVariable Long id) {
+        gunplaService.deleteById(id);
+    }
+
+    @PostMapping
+    public Gunpla createGunpla(@RequestBody Gunpla gunpla) {
+        Gunpla entity = gunplaService.save(gunpla);
+        return entity;
+    }
+
     
     
 
