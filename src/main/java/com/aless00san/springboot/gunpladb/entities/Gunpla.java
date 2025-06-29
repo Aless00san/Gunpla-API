@@ -30,16 +30,17 @@ public class Gunpla {
 
 
     //TODO implement pbandai
-    @Transient
-    @JsonIgnore
-    private boolean pBandai;
+    // @Transient
+    // @JsonIgnore
+    // private boolean pBandai = false;
 
     public Gunpla() {}
 
     public Gunpla(Long id, String name, Grade grade, Series series, Date lastKnownReprint) {
         this.id = id;
         this.name = name;
- 
+        this.grade = grade;
+        this.series = series;
         this.lastKnownReprint = lastKnownReprint;
     }
 

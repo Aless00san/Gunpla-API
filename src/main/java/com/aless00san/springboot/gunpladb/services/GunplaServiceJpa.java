@@ -63,8 +63,7 @@ public class GunplaServiceJpa implements IGunplaService {
 
     @Override
     public List<Gunpla> findBySeries(String series) {
-        // TODO Auto-generated method stub
-        throw new UnsupportedOperationException("Unimplemented method 'findBySeries'");
+        return repository.findBySeries(series);
     }
 
 }
