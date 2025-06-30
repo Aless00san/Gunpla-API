@@ -16,7 +16,9 @@ public class GradeServiceJpa implements IGradeService {
 
     @Override
     public void delete(Grade grade) {
-        repository.delete(grade);
+        if (repository.findById(grade.getId()).isPresent()) {
+            repository.delete(grade);
+        }
     }
 
     @Override
