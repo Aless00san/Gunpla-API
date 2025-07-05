@@ -6,7 +6,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
-import org.springframework.web.service.annotation.DeleteExchange;
 
 import com.aless00san.springboot.gunpladb.entities.Grade;
 import com.aless00san.springboot.gunpladb.services.IGradeService;
@@ -17,7 +16,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-
 
 @RestController
 @RequestMapping("/api/grade")
@@ -38,7 +36,7 @@ public class GradeController {
         return gradeService.findById(id);
     }
 
-    @GetMapping(params = {"name"})
+    @GetMapping(params = { "name" })
     public Grade findGradeByName(@RequestParam String name) {
         return gradeService.findByName(name);
     }
@@ -47,7 +45,7 @@ public class GradeController {
     public Grade postMethodName(@RequestBody Grade grade) {
         return gradeService.create(grade);
     }
-    
+
     @DeleteMapping("/{id}")
     public void deleteGradeById(@PathVariable Long id) {
         if (gradeService.findById(id) != null) {
@@ -55,7 +53,7 @@ public class GradeController {
         } else {
             throw new IllegalArgumentException("Grade not found");
         }
-        
+
     }
 
 }

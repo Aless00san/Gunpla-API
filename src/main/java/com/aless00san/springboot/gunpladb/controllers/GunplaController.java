@@ -16,7 +16,6 @@ import com.aless00san.springboot.gunpladb.services.IGunplaService;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
-
 @RestController
 @RequestMapping("/api/gunpla")
 public class GunplaController {
@@ -36,12 +35,12 @@ public class GunplaController {
         return gunplaService.findById(id);
     }
 
-    @GetMapping(params = {"grade"})
+    @GetMapping(params = { "grade" })
     public List<Gunpla> findByGrade(@RequestParam String grade) {
         return gunplaService.findByGrade(grade);
     }
-    
-    @GetMapping(params = {"series"})
+
+    @GetMapping(params = { "series" })
     public List<Gunpla> findBySeries(@RequestParam String series) {
         return gunplaService.findBySeries(series);
     }
@@ -51,13 +50,11 @@ public class GunplaController {
         gunplaService.deleteById(id);
     }
 
+    @CrossOrigin(origins = "http://localhost:5173")
     @PostMapping
     public Gunpla createGunpla(@RequestBody Gunpla gunpla) {
         Gunpla entity = gunplaService.save(gunpla);
         return entity;
     }
-
-    
-    
 
 }
