@@ -11,6 +11,7 @@ import org.springframework.web.service.annotation.DeleteExchange;
 import com.aless00san.springboot.gunpladb.entities.Grade;
 import com.aless00san.springboot.gunpladb.services.IGradeService;
 
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -25,6 +26,8 @@ public class GradeController {
     @Autowired
     IGradeService gradeService;
 
+    // CrossOrigin for allowing the front-end to acces the API
+    @CrossOrigin(origins = "http://localhost:5173")
     @RequestMapping("/list")
     public List<Grade> listAllGrades() {
         return gradeService.findAll();

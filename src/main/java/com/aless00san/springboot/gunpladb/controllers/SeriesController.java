@@ -7,15 +7,14 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
-import com.aless00san.springboot.gunpladb.entities.Grade;
 import com.aless00san.springboot.gunpladb.entities.Series;
 import com.aless00san.springboot.gunpladb.services.ISeriesService;
+
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
-
-
 
 @RestController
 @RequestMapping("/api/series")
@@ -24,6 +23,8 @@ public class SeriesController {
     @Autowired
     ISeriesService seriesService;
 
+    // CrossOrigin for allowing the front-end to acces the API
+    @CrossOrigin(origins = "http://localhost:5173")
     @GetMapping("/list")
     public List<Series> listAll() {
         return seriesService.findAll();
@@ -34,7 +35,7 @@ public class SeriesController {
         return seriesService.findById(id);
     }
 
-    @GetMapping(params = {"name"})
+    @GetMapping(params = { "name" })
     public Series findSeriesByName(@RequestParam String name) {
         return seriesService.findByName(name);
     }
@@ -43,5 +44,5 @@ public class SeriesController {
     public Series postMethodName(@RequestBody Series series) {
         return seriesService.save(series);
     }
-    
+
 }
