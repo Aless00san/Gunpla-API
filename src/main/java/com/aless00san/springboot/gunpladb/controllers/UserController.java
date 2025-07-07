@@ -28,7 +28,7 @@ public class UserController {
         return userService.findAll();
     }
 
-    @PreAuthorize("hasRole('ADMIN')")
+    // @PreAuthorize("hasRole('ADMIN')")
     @PostMapping
     public ResponseEntity<?> create(@RequestBody User user, BindingResult result) {
         if (result.hasFieldErrors()) {

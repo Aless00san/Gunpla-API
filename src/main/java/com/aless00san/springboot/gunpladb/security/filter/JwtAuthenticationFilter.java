@@ -19,14 +19,13 @@ import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.web.authentication.UsernamePasswordAuthenticationFilter;
 
 import com.aless00san.springboot.gunpladb.entities.system.User;
-import com.fasterxml.jackson.core.exc.StreamReadException;
-import com.fasterxml.jackson.databind.DatabindException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
 import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -92,13 +91,22 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
         String jws = Jwts.builder()
                 .subject(username)
-                .expiration(new Date(System.currentTimeMillis() + 3600000))
+                .expiration(new Date(System.currentTimeMillis() + 86400000)) //24 hours
                 .issuedAt(new Date())
                 .claims(claims)
                 .signWith(SECRET_KEY)
                 .compact();
 
-        response.addHeader(HEADER_STRING, TOKEN_PREFIX + jws);
+        // response.addHeader(HEADER_STRING, TOKEN_PREFIX + jws);
+
+        // Instead of adding to header, set as httpOnly cookie
+        Cookie cookie = new Cookie("auth_token", jws);
+        cookie.setHttpOnly(true);
+        cookie.setSecure(false); // Set to true in production with HTTPS
+        cookie.setPath("/");
+        cookie.setMaxAge(86400); // 24 hours in seconds 
+        
+        response.addCookie(cookie);
 
         Map<String, String> body = new HashMap<>();
         body.put("token", jws);

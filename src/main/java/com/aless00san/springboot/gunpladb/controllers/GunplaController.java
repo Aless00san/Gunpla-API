@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.RestController;
 import com.aless00san.springboot.gunpladb.entities.Gunpla;
 import com.aless00san.springboot.gunpladb.services.IGunplaService;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 
 @RestController
@@ -54,6 +55,13 @@ public class GunplaController {
     @PostMapping
     public Gunpla createGunpla(@RequestBody Gunpla gunpla) {
         Gunpla entity = gunplaService.save(gunpla);
+        return entity;
+    }
+
+    @CrossOrigin(origins = "http://localhost:5173")
+    @PutMapping("/{id}")
+    public Gunpla updateGunpla(@PathVariable Long id, @RequestBody Gunpla gunpla) {
+        Gunpla entity = gunplaService.update(id, gunpla);
         return entity;
     }
 
