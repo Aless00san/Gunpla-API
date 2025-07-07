@@ -4,7 +4,6 @@ import java.util.Arrays;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
-import jakarta.servlet.DispatcherType;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.http.HttpMethod;
 import org.springframework.http.HttpStatus;
@@ -14,12 +13,8 @@ import org.springframework.security.config.annotation.authentication.configurati
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.http.SessionCreationPolicy;
-import org.springframework.security.core.userdetails.User;
-import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
-import org.springframework.security.provisioning.InMemoryUserDetailsManager;
 import org.springframework.security.web.SecurityFilterChain;
 import org.springframework.security.web.authentication.HttpStatusEntryPoint;
 import org.springframework.web.cors.CorsConfiguration;
@@ -29,6 +24,8 @@ import org.springframework.web.cors.UrlBasedCorsConfigurationSource;
 import com.aless00san.springboot.gunpladb.security.filter.JwtAuthenticationFilter;
 import com.aless00san.springboot.gunpladb.security.filter.JwtValidationFilter;
 import com.aless00san.springboot.gunpladb.services.UserDetailsServiceJpa;
+
+import jakarta.servlet.DispatcherType;
 
 @Configuration
 @EnableWebSecurity
@@ -85,10 +82,12 @@ public class WebSecurityConfig {
 				.authorizeHttpRequests(requests -> requests
 						.dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll()
 						.requestMatchers("/login").permitAll() // Keep this for JWT token generation
-						.requestMatchers("/api/gunpla/list").permitAll()
+						.requestMatchers("/api/gunpla/list").authenticated()
 						.requestMatchers("/api/series/list").permitAll()
 						.requestMatchers("/api/grade/list").permitAll()
+						.requestMatchers("api/user").permitAll()
 						.requestMatchers("/api/gunpla").hasRole("USER").requestMatchers(HttpMethod.POST).authenticated()
+						.requestMatchers("/api/gunpla/{id}").hasRole("USER").requestMatchers(HttpMethod.PUT).authenticated()
 						.anyRequest().authenticated())
 				// DISABLE form login for REST API
 				.formLogin(form -> form.disable())

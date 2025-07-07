@@ -24,6 +24,7 @@ import io.jsonwebtoken.Claims;
 import io.jsonwebtoken.Jwts;
 import jakarta.servlet.FilterChain;
 import jakarta.servlet.ServletException;
+import jakarta.servlet.http.Cookie;
 import jakarta.servlet.http.HttpServletRequest;
 import jakarta.servlet.http.HttpServletResponse;
 
@@ -39,12 +40,13 @@ public class JwtValidationFilter extends BasicAuthenticationFilter {
 
         String header = request.getHeader(HEADER_STRING);
 
-        if (header == null || !header.startsWith(TOKEN_PREFIX)) {
+        // Get token from cookie instead of header
+        String token = getTokenFromCookie(request);
+
+        if (token == null) {
             chain.doFilter(request, response);
             return;
         }
-
-        String token = header.replace(TOKEN_PREFIX, "");
 
         try {
             Claims claims = Jwts.parser().verifyWith(SECRET_KEY).build().parseSignedClaims(token).getPayload();
@@ -58,6 +60,7 @@ public class JwtValidationFilter extends BasicAuthenticationFilter {
             UsernamePasswordAuthenticationToken authToken = new UsernamePasswordAuthenticationToken(username, null,
                     auths);
             SecurityContextHolder.getContext().setAuthentication(authToken);
+
             chain.doFilter(request, response);
         } catch (Exception e) {
             Map<String, String> body = new java.util.HashMap<>();
@@ -68,6 +71,23 @@ public class JwtValidationFilter extends BasicAuthenticationFilter {
             response.setStatus(HttpServletResponse.SC_UNAUTHORIZED);
             response.setContentType(CONTENT_TYPE);
         }
+    }
+
+    private String getTokenFromCookie(HttpServletRequest request) {
+        Cookie[] cookies = request.getCookies();
+        System.out.println("Cookies found: " + (cookies != null ? cookies.length : 0));
+
+        if (cookies != null) {
+            for (Cookie cookie : cookies) {
+                System.out.println("Cookie: " + cookie.getName() + " = " + cookie.getValue());
+                if ("auth_token".equals(cookie.getName())) {
+                    System.out.println("Found auth_token cookie!");
+                    return cookie.getValue();
+                }
+            }
+        }
+        System.out.println("No auth_token cookie found");
+        return null;
     }
 
 }
