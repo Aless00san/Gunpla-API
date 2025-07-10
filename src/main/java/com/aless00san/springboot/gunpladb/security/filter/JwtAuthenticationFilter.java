@@ -91,7 +91,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
 
         String jws = Jwts.builder()
                 .subject(username)
-                .expiration(new Date(System.currentTimeMillis() + 86400000)) //24 hours
+                .expiration(new Date(System.currentTimeMillis() + 86400000)) // 24 hours
                 .issuedAt(new Date())
                 .claims(claims)
                 .signWith(SECRET_KEY)
@@ -104,8 +104,8 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         cookie.setHttpOnly(true);
         cookie.setSecure(false); // Set to true in production with HTTPS
         cookie.setPath("/");
-        cookie.setMaxAge(86400); // 24 hours in seconds 
-        
+        cookie.setMaxAge(86400); // 24 hours in seconds
+
         response.addCookie(cookie);
 
         Map<String, String> body = new HashMap<>();

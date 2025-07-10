@@ -1,9 +1,7 @@
 package com.aless00san.springboot.gunpladb.security.filter;
 
 import static com.aless00san.springboot.gunpladb.JwtTokenConfig.CONTENT_TYPE;
-import static com.aless00san.springboot.gunpladb.JwtTokenConfig.HEADER_STRING;
 import static com.aless00san.springboot.gunpladb.JwtTokenConfig.SECRET_KEY;
-import static com.aless00san.springboot.gunpladb.JwtTokenConfig.TOKEN_PREFIX;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -37,8 +35,6 @@ public class JwtValidationFilter extends BasicAuthenticationFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
             throws ServletException, IOException {
-
-        String header = request.getHeader(HEADER_STRING);
 
         // Get token from cookie instead of header
         String token = getTokenFromCookie(request);
