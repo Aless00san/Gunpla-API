@@ -3,7 +3,8 @@
 
 ### Properties ###
 *.properties
-
+#schemes
+*.sql
 ### STS ###
 .apt_generated
 .classpath

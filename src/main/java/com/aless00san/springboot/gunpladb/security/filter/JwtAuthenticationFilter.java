@@ -1,9 +1,7 @@
 package com.aless00san.springboot.gunpladb.security.filter;
 
 import static com.aless00san.springboot.gunpladb.JwtTokenConfig.CONTENT_TYPE;
-import static com.aless00san.springboot.gunpladb.JwtTokenConfig.HEADER_STRING;
 import static com.aless00san.springboot.gunpladb.JwtTokenConfig.SECRET_KEY;
-import static com.aless00san.springboot.gunpladb.JwtTokenConfig.TOKEN_PREFIX;
 
 import java.io.IOException;
 import java.util.Collection;
@@ -102,7 +100,7 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
         // Instead of adding to header, set as httpOnly cookie
         Cookie cookie = new Cookie("auth_token", jws);
         cookie.setHttpOnly(true);
-        cookie.setSecure(false); // Set to true in production with HTTPS
+        cookie.setSecure(true);
         cookie.setPath("/");
         cookie.setMaxAge(86400); // 24 hours in seconds
 

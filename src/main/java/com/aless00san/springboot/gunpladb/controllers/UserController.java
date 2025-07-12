@@ -5,7 +5,6 @@ import java.util.List;
 import java.util.Map;
 
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.actuate.autoconfigure.observation.ObservationProperties.Http;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.HttpStatusCode;
 import org.springframework.http.ResponseEntity;
@@ -102,8 +101,12 @@ public class UserController {
     @CrossOrigin(origins = "http://localhost:5173")
     @GetMapping("/roles/{username}")
     public ResponseEntity<?> roles(@PathVariable String username) {
-        List<Role> roles = userService.findRolesByUsername(username);
-        return ResponseEntity.ok().body(roles);
+        if (username != "anonymousUser") {
+            List<Role> roles = userService.findRolesByUsername(username);
+            return ResponseEntity.ok().body(roles);
+        }
+        return ResponseEntity.status(HttpStatus.NOT_FOUND).body("User  is not authenticated");
+
     }
 
     private ResponseEntity<?> validation(BindingResult result) {
