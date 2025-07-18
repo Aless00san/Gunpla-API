@@ -83,6 +83,7 @@ public class WebSecurityConfig {
 						.dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll()
 						.requestMatchers("/login").permitAll() // This is needed for JWT token generation
 						.requestMatchers("/api/gunpla/list").permitAll()
+						.requestMatchers("/api/gunpla/list/{page}/{size}").authenticated()
 						.requestMatchers("/api/series/list").permitAll()
 						.requestMatchers("/api/grade/list").permitAll()
 						.requestMatchers("/api/user").permitAll()
