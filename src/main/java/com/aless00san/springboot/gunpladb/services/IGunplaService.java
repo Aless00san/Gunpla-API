@@ -2,6 +2,9 @@ package com.aless00san.springboot.gunpladb.services;
 
 import java.util.List;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+
 import com.aless00san.springboot.gunpladb.entities.Gunpla;
 
 public interface IGunplaService {
@@ -21,4 +24,6 @@ public interface IGunplaService {
     List<Gunpla> findByGrade(String grade);
 
     List<Gunpla> findBySeries(String series);
+
+    Page<Gunpla> findAll(Pageable pageable);
 }
