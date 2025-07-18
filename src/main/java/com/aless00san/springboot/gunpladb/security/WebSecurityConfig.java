@@ -81,21 +81,22 @@ public class WebSecurityConfig {
 				.cors(cors -> cors.configurationSource(corsConfigurationSource()))
 				.authorizeHttpRequests(requests -> requests
 						.dispatcherTypeMatchers(DispatcherType.FORWARD).permitAll()
-						.requestMatchers("/login").permitAll() // Keep this for JWT token generation
-						.requestMatchers("/api/gunpla/list").authenticated()
+						.requestMatchers("/login").permitAll() // This is needed for JWT token generation
+						.requestMatchers("/api/gunpla/list").permitAll()
+						.requestMatchers("/api/gunpla/list/{page}/{size}").authenticated()
 						.requestMatchers("/api/series/list").permitAll()
 						.requestMatchers("/api/grade/list").permitAll()
-						.requestMatchers("api/user").permitAll()
+						.requestMatchers("/api/user").permitAll()
+						.requestMatchers("/api/user/auth").permitAll()
+						.requestMatchers("/api/user/**").permitAll()
 						.requestMatchers("/api/gunpla").hasRole("USER").requestMatchers(HttpMethod.POST).authenticated()
-						.requestMatchers("/api/gunpla/{id}").hasRole("USER").requestMatchers(HttpMethod.PUT).authenticated()
+						.requestMatchers("/api/gunpla/{id}").hasRole("USER").requestMatchers(HttpMethod.PUT)
+						.authenticated()
 						.anyRequest().authenticated())
-				// DISABLE form login for REST API
 				.formLogin(form -> form.disable())
-				// DISABLE http basic auth
 				.httpBasic(basic -> basic.disable())
-				// Configure exception handling to return 401 instead of redirect
 				.exceptionHandling(ex -> ex
-						.authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.UNAUTHORIZED)))
+						.authenticationEntryPoint(new HttpStatusEntryPoint(HttpStatus.BAD_REQUEST)))
 				.logout(logout -> logout.permitAll())
 				.addFilter(jwtValidationFilter)
 				.addFilter(jwtAuthFilter)

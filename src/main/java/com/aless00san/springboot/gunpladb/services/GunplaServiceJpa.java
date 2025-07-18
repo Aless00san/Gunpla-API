@@ -5,6 +5,8 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import com.aless00san.springboot.gunpladb.entities.Gunpla;
@@ -64,6 +66,11 @@ public class GunplaServiceJpa implements IGunplaService {
     @Override
     public List<Gunpla> findBySeries(String series) {
         return repository.findBySeries(series);
+    }
+
+    @Override
+    public Page<Gunpla> findAll(Pageable pageable) {
+        return repository.findAll(pageable);
     }
 
 }

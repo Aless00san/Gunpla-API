@@ -1,9 +1,7 @@
 package com.aless00san.springboot.gunpladb.security.filter;
 
 import static com.aless00san.springboot.gunpladb.JwtTokenConfig.CONTENT_TYPE;
-import static com.aless00san.springboot.gunpladb.JwtTokenConfig.HEADER_STRING;
 import static com.aless00san.springboot.gunpladb.JwtTokenConfig.SECRET_KEY;
-import static com.aless00san.springboot.gunpladb.JwtTokenConfig.TOKEN_PREFIX;
 
 import java.io.IOException;
 import java.util.Arrays;
@@ -37,8 +35,6 @@ public class JwtValidationFilter extends BasicAuthenticationFilter {
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain chain)
             throws ServletException, IOException {
-
-        String header = request.getHeader(HEADER_STRING);
 
         // Get token from cookie instead of header
         String token = getTokenFromCookie(request);
@@ -75,18 +71,14 @@ public class JwtValidationFilter extends BasicAuthenticationFilter {
 
     private String getTokenFromCookie(HttpServletRequest request) {
         Cookie[] cookies = request.getCookies();
-        System.out.println("Cookies found: " + (cookies != null ? cookies.length : 0));
 
         if (cookies != null) {
             for (Cookie cookie : cookies) {
-                System.out.println("Cookie: " + cookie.getName() + " = " + cookie.getValue());
                 if ("auth_token".equals(cookie.getName())) {
-                    System.out.println("Found auth_token cookie!");
                     return cookie.getValue();
                 }
             }
         }
-        System.out.println("No auth_token cookie found");
         return null;
     }
 

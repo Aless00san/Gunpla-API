@@ -54,4 +54,9 @@ public class UserServiceJpa implements IUserService {
         return repository.existsByUsername(username);
     }
 
+    @Override
+    public List<Role> findRolesByUsername(String username) {
+        return repository.findRolesByUsername(username);
+    }
+
 }
