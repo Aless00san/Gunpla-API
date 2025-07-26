@@ -68,6 +68,7 @@ public class GunplaController {
         return entity;
     }
 
+    @CrossOrigin(origins = "https://https://main.dfnl6fna5gler.amplifyapp.com:5173")
     @GetMapping(value = "/list", params = { "page", "size" })
     public Page<Gunpla> getPage(@RequestParam int page, @RequestParam int size) {
         Pageable pageable = PageRequest.of(page, size);
