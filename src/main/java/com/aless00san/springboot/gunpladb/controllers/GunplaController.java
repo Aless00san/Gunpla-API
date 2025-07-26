@@ -27,8 +27,6 @@ public class GunplaController {
     @Autowired
     private IGunplaService gunplaService;
 
-    // CrossOrigin for allowing the front-end to acces the API
-    @CrossOrigin(origins = "https://https://main.dfnl6fna5gler.amplifyapp.com:5173")
     @GetMapping("/list")
     public List<Gunpla> listAllGunplas() {
         return gunplaService.findAll();
@@ -54,21 +52,18 @@ public class GunplaController {
         gunplaService.deleteById(id);
     }
 
-    @CrossOrigin(origins = "https://https://main.dfnl6fna5gler.amplifyapp.com:5173")
     @PostMapping
     public Gunpla createGunpla(@RequestBody Gunpla gunpla) {
         Gunpla entity = gunplaService.save(gunpla);
         return entity;
     }
 
-    @CrossOrigin(origins = "https://https://main.dfnl6fna5gler.amplifyapp.com:5173")
     @PutMapping("/{id}")
     public Gunpla updateGunpla(@PathVariable Long id, @RequestBody Gunpla gunpla) {
         Gunpla entity = gunplaService.update(id, gunpla);
         return entity;
     }
 
-    @CrossOrigin(origins = "https://https://main.dfnl6fna5gler.amplifyapp.com:5173")
     @GetMapping(value = "/list", params = { "page", "size" })
     public Page<Gunpla> getPage(@RequestParam int page, @RequestParam int size) {
         Pageable pageable = PageRequest.of(page, size);

@@ -23,8 +23,6 @@ public class SeriesController {
     @Autowired
     ISeriesService seriesService;
 
-    // CrossOrigin for allowing the front-end to acces the API
-    @CrossOrigin(origins = "http://localhost:5173")
     @GetMapping("/list")
     public List<Series> listAll() {
         return seriesService.findAll();

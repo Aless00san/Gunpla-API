@@ -58,7 +58,7 @@ public class WebSecurityConfig {
 	public CorsConfigurationSource corsConfigurationSource() {
 		CorsConfiguration configuration = new CorsConfiguration();
 		// allow frontend to access the API
-		configuration.setAllowedOriginPatterns(Arrays.asList("https://main.dfnl6fna5gler.amplifyapp.com:5173"));
+		configuration.setAllowedOriginPatterns(Arrays.asList("https://main.dfnl6fna5gler.amplifyapp.com"));
 		configuration.setAllowedMethods(Arrays.asList("GET", "POST", "PUT", "DELETE", "OPTIONS"));
 		configuration.setAllowedHeaders(Arrays.asList("*"));
 		configuration.setAllowCredentials(true);

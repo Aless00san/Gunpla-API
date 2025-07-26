@@ -48,7 +48,6 @@ public class UserController {
         return ResponseEntity.ok(userService.save(user));
     }
 
-    @CrossOrigin(origins = "http://localhost:5173")
     @PostMapping("/register")
     public ResponseEntity<?> register(@RequestBody User user, BindingResult result) {
         user.setSuperuser(false);
@@ -58,7 +57,6 @@ public class UserController {
         return ResponseEntity.ok(userService.save(user));
     }
 
-    @CrossOrigin(origins = "http://localhost:5173")
     @PostMapping("/logout")
     public ResponseEntity<?> logout(HttpServletResponse response) {
         Cookie cookie = new Cookie("auth_token", null);
@@ -69,7 +67,6 @@ public class UserController {
         return ResponseEntity.ok("Logged out successfully");
     }
 
-    @CrossOrigin(origins = "http://localhost:5173")
     @GetMapping("/auth")
     public ResponseEntity<?> auth(HttpServletRequest request, HttpServletResponse response) {
         if (request.getCookies() == null || request.getCookies().length == 0) {
@@ -98,7 +95,6 @@ public class UserController {
         }
     }
 
-    @CrossOrigin(origins = "http://localhost:5173")
     @GetMapping("/roles/{username}")
     public ResponseEntity<?> roles(@PathVariable String username) {
         if (username != "anonymousUser") {

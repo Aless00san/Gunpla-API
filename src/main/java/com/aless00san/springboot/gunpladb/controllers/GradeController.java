@@ -24,8 +24,6 @@ public class GradeController {
     @Autowired
     IGradeService gradeService;
 
-    // CrossOrigin for allowing the front-end to acces the API
-    @CrossOrigin(origins = "http://localhost:5173")
     @RequestMapping("/list")
     public List<Grade> listAllGrades() {
         return gradeService.findAll();
