@@ -95,16 +95,18 @@ public class JwtAuthenticationFilter extends UsernamePasswordAuthenticationFilte
                 .signWith(SECRET_KEY)
                 .compact();
 
-        // response.addHeader(HEADER_STRING, TOKEN_PREFIX + jws);
+        // WE DEFINE THE COOKIE AS HTTPONLY TO AVOID XSS
 
-        // Instead of adding to header, set as httpOnly cookie
-        Cookie cookie = new Cookie("auth_token", jws);
-        cookie.setHttpOnly(true);
-        cookie.setSecure(true);
-        cookie.setPath("/");
-        cookie.setMaxAge(86400); // 24 hours in seconds
+        // Cookie cookie = new Cookie("auth_token", jws);
+        // cookie.setHttpOnly(true);
+        // cookie.setSecure(true);
+        // cookie.setPath("/");
+        // cookie.setMaxAge(86400); // 24 hours in seconds
+        // response.addCookie(cookie);
 
-        response.addCookie(cookie);
+        // Cookie as string, workaround for SameSite=None
+        String cookieValue = "auth_token=" + jws + "; Path=/; Max-Age=86400; Secure; HttpOnly; SameSite=None";
+        response.addHeader("Set-Cookie", cookieValue);
 
         Map<String, String> body = new HashMap<>();
         body.put("token", jws);
