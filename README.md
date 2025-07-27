@@ -1,5 +1,5 @@
 
-# GunplaAPI
+## GunplaAPI
 
 A Simple Spring API for managing Gundam model kits (known as gunplas)
 
