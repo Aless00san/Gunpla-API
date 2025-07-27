@@ -1,4 +1,9 @@
 
+# GunplaAPI
+
+A Simple Spring API for managing Gundam model kits (known as gunplas)
+
+
 ## API Reference
 
 ### Gunpla
@@ -194,3 +199,49 @@
 ```http
   GET /api/user/auth
 ```
+
+## Before Running
+
+- Install mysql-server 8.0 or higher
+
+If you are running Debian
+```bash
+ sudo apt install mysql-server
+```
+    
+If you are running Windows 
+
+[windows installer](https://dev.mysql.com/downloads/installer)
+
+- Install java jre17
+    - You can install whatever version you want for the exapmples we use openjdk
+
+If you are running Debian
+
+```bash
+ sudo apt install openjdk-17-jre
+```
+
+[windows download](https://jdk.java.net/archivel)
+
+
+## Run Locally
+
+Clone the project
+
+```bash
+  git clone https://github.com/Aless00san/Gunpla-API.git
+```
+
+Go to the project directory
+
+```bash
+  cd Gunpla-API
+```
+
+Start the server
+
+```bash
+  ./mvnw spring-boot:run
+```
+
